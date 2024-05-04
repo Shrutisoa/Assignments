@@ -1,0 +1,505 @@
+// 1. Implement a Java program to handle NullPointerException.
+public class HandleNullPointerException {
+    public static void main(String[] args) {
+        try {
+            String str = null;
+            System.out.println(str.length());
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException caught!");
+        }
+    }
+}
+// 2. Design a Java program to display numeric characters preceded by a vowel and consonant.
+public class DisplayNumericCharacters {
+    public static void main(String[] args) {
+        try {
+            String input = "a1b2c3d4";
+            if (input == null || input.isEmpty()) {
+                throw new NullPointerException("Input string is null or empty");
+            }
+            for (int i = 0; i < input.length(); i++) {
+                char currentChar = input.charAt(i);
+                if (Character.isDigit(currentChar)) {
+                    if (i >= 2 && Character.isLetter(input.charAt(i - 1)) && isVowel(input.charAt(i - 2))) {
+                        System.out.println(currentChar);
+                    }
+                }
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static boolean isVowel(char c) {
+        return "aeiouAEIOU".indexOf(c) != -1;
+    }
+}
+
+// 3. Implement a custom NullPointerException class named CustomNullPointerException.
+public class CustomNullPointerException extends NullPointerException {
+    public CustomNullPointerException(String message) {
+        super(message);
+    }
+}
+
+// Usage:
+public class CustomNullPointerExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            throw new CustomNullPointerException("Custom NullPointerException occurred");
+        } catch (CustomNullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+// 4. Implement a Java program to handle custom File exceptions.
+public class FileOperation {
+    public static void main(String[] args) {
+        try {
+            // Read file path from command line argument
+            String filePath = args[0];
+            readFile(filePath);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (FileReadPermissionException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void readFile(String filePath) throws FileNotFoundException, FileReadPermissionException {
+        // Check if file path is null or non-existent
+        if (filePath == null) {
+            throw new FileNotFoundException("File path is null");
+        }
+
+        // Check if file exists but cannot be read due to permission issues
+        if (!Files.exists(Paths.get(filePath))) {
+            throw new FileNotFoundException("File does not exist");
+        }
+
+        // Attempt to read file contents
+        try {
+            Files.readAllLines(Paths.get(filePath));
+            System.out.println("File read successfully");
+        } catch (IOException e) {
+            throw new FileReadPermissionException("Permission denied to read file");
+        }
+    }
+}
+
+// Custom exception classes
+class FileNotFoundException extends Exception {
+    public FileNotFoundException(String message) {
+        super(message);
+    }
+}
+
+class FileReadPermissionException extends Exception {
+    public FileReadPermissionException(String message) {
+        super(message);
+    }
+}
+// 5. Develop a program that performs complex mathematical computations and handles NullPointerException.
+public class ComplexMathComputation {
+    public static void main(String[] args) {
+        try {
+            // Perform complex mathematical computations
+            double result = performComplexComputation();
+            System.out.println("Result: " + result);
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private static double performComplexComputation() {
+        Double num = null; // Simulating a null value
+        return Math.log(num); // This will throw NullPointerException
+    }
+}
+6.import java.util.Scanner;
+
+public class NumberFormatExceptionHandling {
+    public static void main(String[] args) {
+        try {
+            // Attempting to convert a string to an integer
+            String str = "abc";
+            int num = Integer.parseInt(str);
+            System.out.println("Number: " + num);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format. Please enter a valid number.");
+        }
+    }
+}
+7.import java.util.Scanner;
+
+public class StringToIntegerConverter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        String input = scanner.nextLine();
+        try {
+            int number = Integer.parseInt(input);
+            System.out.println("Converted number: " + number);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid number.");
+        }
+    }
+}
+8.import java.util.Scanner;
+
+public class SquareRootCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter an integer: ");
+        int num = scanner.nextInt();
+        try {
+            double result = Math.sqrt(num);
+            System.out.println("Square root: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot calculate square root of a negative number.");
+        }
+    }
+}
+9.import java.util.Scanner;
+
+public class Division {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter dividend: ");
+        int dividend = scanner.nextInt();
+        System.out.print("Enter divisor: ");
+        int divisor = scanner.nextInt();
+        try {
+            int result = dividend / divisor;
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Division by zero is not allowed.");
+        }
+    }
+}
+10.import java.lang.Math;
+
+public class ExpressionCalculator {
+
+    public static double calculateExpression(double x) {
+        double sinValue = Math.sin(x);
+        double cosValue = Math.cos(x);
+        double tanValue = Math.tan(x);
+        
+        if (Math.abs(x % (Math.PI / 2)) < 0.0001) {
+            return Double.NaN; // Close to multiples of pi/2, return NaN to avoid division by zero
+        }
+        
+        return (sinValue + cosValue) / tanValue;
+    }
+
+    public static void main(String[] args) {
+        double x = 1.2; // Example value of x
+        System.out.println("Value of expression: " + calculateExpression(x));
+    }
+}
+11.import java.lang.Math;
+
+public class ExpressionCalculator {
+
+    public static double calculateExpression(double x) {
+        double sinValue = Math.sin(x);
+        double cosValue = Math.cos(x);
+        double tanValue = Math.tan(x);
+        
+        if (Math.abs(x % (Math.PI / 2)) < 0.0001) {
+            return Double.NaN; // Close to multiples of pi/2, return NaN to avoid division by zero
+        }
+        
+        return (sinValue + cosValue) / tanValue;
+    }
+
+    public static double calculateFunction(double x) {
+        double sinValue = Math.sin(x);
+        double cosValue = Math.cos(x);
+        double tanValue = Math.tan(x);
+        double cotValue = 1 / tanValue;
+        
+        try {
+            double result = Math.log(sinValue + cosValue) / (tanValue - cotValue);
+            if (Double.isNaN(result) || Double.isInfinite(result)) {
+                throw new ArithmeticException("Invalid mathematical operation");
+            }
+            return result;
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+            return Double.NaN;
+        }
+    }
+
+    public static double calculateExpressionWithSqrt(double x) {
+        double sinValue = Math.sin(x);
+        double cosValue = Math.cos(x);
+        double tanValue = Math.tan(x);
+        
+        if (Math.abs(x % (Math.PI / 2)) < 0.0001 || tanValue == -1) {
+            return Double.NaN; // Close to multiples of pi/2 or tan(x) = -1, return NaN to avoid division by zero or negative value inside square root
+        }
+        
+        double expression = Math.sqrt(Math.abs(sinValue * cosValue)) / (tanValue + 1);
+        
+        if (Double.isNaN(expression) || Double.isInfinite(expression)) {
+            return Double.NaN; // Handle cases where square root of negative value leads to NaN or division by zero
+        }
+        
+        return expression;
+    }
+
+    public static void main(String[] args) {
+        double x = 1.2; // Example value of x
+        System.out.println("Value of expression: " + calculateExpression(x));
+        System.out.println("Value of function: " + calculateFunction(x));
+        System.out.println("Value of expression with sqrt: " + calculateExpressionWithSqrt(x));
+    }
+}
+12.import java.lang.Math;
+
+public class ExpressionCalculator {
+
+    public static double calculateExpressionWithSqrt(double x) {
+        double sinValue = Math.sin(x);
+        double cosValue = Math.cos(x);
+        double tanValue = Math.tan(x);
+        
+        if (Math.abs(x % (Math.PI / 2)) < 0.0001 || tanValue == -1) {
+            return Double.NaN; // Close to multiples of pi/2 or tan(x) = -1, return NaN to avoid division by zero or negative value inside square root
+        }
+        
+        double expression = Math.sqrt(Math.abs(sinValue * cosValue)) / (tanValue + 1);
+        
+        if (Double.isNaN(expression) || Double.isInfinite(expression)) {
+            return Double.NaN; // Handle cases where square root of negative value leads to NaN or division by zero
+        }
+        
+        return expression;
+    }
+
+    public static void main(String[] args) {
+        double x = 1.2; // Example value of x
+        System.out.println("Value of expression with sqrt: " + calculateExpressionWithSqrt(x));
+    }
+}
+13.import java.util.Scanner;
+
+public class FunctionEvaluator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the value of x: ");
+        double x = scanner.nextDouble();
+
+        try {
+            double result = (Math.sin(x) * Math.cos(x)) / (Math.sin(x) + Math.cos(x));
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Error: Division by zero.");
+        }
+    }
+}
+14.import java.util.Scanner;
+
+public class ExpressionCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the value of x: ");
+        double x = scanner.nextDouble();
+
+        try {
+            double result = Math.log(Math.abs(Math.sin(x) + Math.cos(x))) / (Math.tan(x) - (1 / Math.tan(x)));
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException | IllegalArgumentException e) {
+            System.out.println("Error: Invalid operation or negative value inside logarithmic function.");
+        }
+    }
+}
+15.public class NestedTryCatch {
+    public static void main(String[] args) {
+        try {
+            String str = "abc";
+            int num = Integer.parseInt(str);
+            
+            try {
+                int result = 10 / 0;
+            } catch (ArithmeticException e) {
+                System.out.println("Inner catch block: " + e.getMessage());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Outer catch block: " + e.getMessage());
+        }
+    }
+}
+16.public class ArrayIndexOutOfBounds {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        try {
+            System.out.println(arr[3]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Array index out of bounds.");
+        }
+    }
+}
+17.import java.util.LinkedList;
+
+public class LinkedListExample {
+    public static void main(String[] args) {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+
+        try {
+            System.out.println(list.get(3));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error: Index out of bounds.");
+        }
+    }
+}
+18.public class RecursiveArrayManipulation {
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4, 5};
+        recursiveManipulation(array, 0);
+    }
+
+    public static void recursiveManipulation(int[] arr, int index) {
+        if (index < arr.length) {
+            try {
+                System.out.println(arr[index]);
+                recursiveManipulation(arr, index + 1);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Error: Index out of bounds.");
+            }
+        }
+    }
+}
+19.import java.util.Arrays;
+
+public class ArrayManipulation {
+    public static void main(String[] args) {
+        int[] array = {4, 2, 6, 1, 5};
+
+        // Sorting
+        Arrays.sort(array);
+
+        // Searching
+        int index = 2;
+        try {
+            System.out.println("Element at index " + index + ": " + array[index]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Index out of bounds.");
+ 
+20.public class RecursiveArrayManipulation {
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4, 5};
+        recursiveManipulation(array, 0);
+    }
+
+    public static void recursiveManipulation(int[] arr, int index) {
+        if (index < arr.length) {
+            try {
+                System.out.println(arr[index]);
+                recursiveManipulation(arr, index + 1);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Error: Index out of bounds.");
+            }
+        }
+    }
+}
+21.public class MatrixOperations {
+    public static void main(String[] args) {
+        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        
+        // Accessing elements beyond the bounds
+        try {
+            System.out.println(matrix[3][0]); // This will throw ArrayIndexOutOfBoundsException
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Index out of bounds.");
+        }
+    }
+}
+22.class CustomCheckedException extends Exception {
+    public CustomCheckedException(String message) {
+        super(message);
+    }
+}
+
+public class CustomExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            throw new CustomCheckedException("Custom checked exception occurred.");
+        } catch (CustomCheckedException e) {
+            System.out.println("Caught custom checked exception: " + e.getMessage());
+        }
+    }
+}
+23.import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileProcessing {
+    public static void main(String[] args) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("filename.txt"));
+            String line = br.readLine();
+            while (line != null) {
+                System.out.println(line);
+                line = br.readLine();
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }
+}
+24.import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+public class FileHandling {
+    public static void main(String[] args) {
+        try {
+            FileReader file = new FileReader("filename.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+}
+25.import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class InputHandler {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Enter an integer: ");
+            int num = scanner.nextInt();
+            System.out.println("Entered integer: " + num);
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Input is not an integer.");
+        }
+    }
+}
+26.public class ExceptionHandling {
+    public static void main(String[] args) {
+        try {
+            Class.forName("NonExistentClass");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found: " + e.getMessage());
+        } finally {
+            System.out.println("Finally block executed.");
+        }
+    }
+}
+27.public class ClassCastExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            Object obj = new Integer(10);
+            String str = (String) obj; // This will throw ClassCastException
+        } catch (ClassCastException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+

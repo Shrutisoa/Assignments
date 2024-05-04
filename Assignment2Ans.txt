@@ -1,0 +1,249 @@
+A2Q1.
+class Student:
+    def __init__(self, name, roll_number, age):
+        self.name = name
+        self.roll_number = str(roll_number)  # Convert roll number to string
+        self.age = age
+    def display_info(self):
+        print("Name:", self.name)
+        print("Roll Number:", self.roll_number)
+        print("Age:", self.age)
+class StudentDriver:
+    def __init__(self):
+        self.students = []
+    def add_student(self, name, roll_number, age):
+        student = Student(name, roll_number, age)
+        self.students.append(student)
+    def display_all_students(self):
+        for student in self.students:
+            student.display_info()
+# Example usage
+driver = StudentDriver()
+driver.add_student("Alice", 101, 20)
+driver.add_student("Bob", "102", 21)
+driver.display_all_students()
+A2Q2.
+class Book {
+    private int bookId;
+    private String bookName;
+    private double price;
+    public Book(int bookId, String bookName, double price) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.price = price;
+    }
+    // Getters and Setters
+    public int getBookId() {
+        return bookId;
+    }
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+    public String getBookName() {
+        return bookName;
+    }
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    // Overriding toString method
+    @Override
+    public String toString() {
+        return "Book ID: " + bookId + ", Book Name: " + bookName + ", Price: $" + price;
+    }
+    // Overriding equals method
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Book book = (Book) obj;
+        return bookId == book.bookId && Double.compare(book.price, price) == 0 && bookName.equals(book.bookName);
+    }
+}
+public class BookDriver {
+    public static void main(String[] args) {
+        Book book1 = new Book(1, "Java Programming", 29.99);
+        Book book2 = new Book(2, "Python Programming", 24.99);
+        // Comparing books based on price
+        if (book1.getPrice() > book2.getPrice()) {
+            System.out.println(book1.getBookName() + " is more expensive than " + book2.getBookName());
+        } else if (book1.getPrice() < book2.getPrice()) {
+            System.out.println(book2.getBookName() + " is more expensive than " + book1.getBookName());
+        } else {
+            System.out.println("Both books have the same price.");
+        }
+        // Printing details of the books
+        System.out.println("Book 1 Details: " + book1);
+        System.out.println("Book 2 Details: " + book2);
+    }
+}
+A2Q3.
+class Car implements Comparable<Car> {
+    private String model;
+    private String color;
+    private double speed;
+    public Car(String model, String color, double speed) {
+        this.model = model;
+        this.color = color;
+        this.speed = speed;
+    }
+    // Getters and Setters
+    public String getModel() {
+        return model;
+    }
+    public void setModel(String model) {
+        this.model = model;
+    }
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    public double getSpeed() {
+        return speed;
+    }
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+    // Overriding compareTo method of Comparable interface
+    @Override
+    public int compareTo(Car otherCar) {
+        return Double.compare(this.speed, otherCar.speed);
+    }
+    // Overriding toString method
+    @Override
+    public String toString() {
+        return "Model: " + model + ", Color: " + color + ", Speed: " + speed + " km/h";
+    }
+}
+public class CarDriver {
+    public static void main(String[] args) {
+        Car car1 = new Car("Toyota Camry", "Red", 180.5);
+        Car car2 = new Car("Honda Civic", "Blue", 200.0);
+        // Comparing cars based on speed
+        if (car1.compareTo(car2) < 0) {
+            System.out.println(car2.getModel() + " is faster than " + car1.getModel());
+            System.out.println("Details of the faster car: " + car2);
+        } else if (car1.compareTo(car2) > 0) {
+            System.out.println(car1.getModel() + " is faster than " + car2.getModel());
+            System.out.println("Details of the faster car: " + car1);
+        } else {
+            System.out.println("Both cars have the same speed.");
+        }
+    }
+}
+A2Q4.
+import java.util.Arrays;
+class Student implements Comparable<Student> {
+    String name;
+    int rn;
+    int totalMark;
+    public Student(String name, int rn, int totalMark) {
+        this.name = name;
+        this.rn = rn;
+        this.totalMark = totalMark;
+    }
+    @Override
+    public int compareTo(Student other) {
+        return Integer.compare(this.rn, other.rn);
+    }
+    public static Student linearSearch(Student[] arr, int key) {
+        for (Student student : arr) {
+            if (student.rn == key) {
+                return student;
+            }
+        }
+        return null; // If not found
+    }
+    public static void main(String[] args) {
+        Student[] students = {
+            new Student("Alice", 101, 85),
+            new Student("Bob", 102, 90),
+            new Student("Charlie", 103, 88)
+        };
+        int searchKey = 102;
+        Student result = linearSearch(students, searchKey);
+        if (result != null) {
+            System.out.println("Student found: " + result.name);
+        } else {
+            System.out.println("Student not found with roll number: " + searchKey);
+        }
+    }
+}
+A2Q5.
+import java.util.Arrays;
+class Student implements Comparable<Student> {
+    String name;
+    int rn;
+    int totalMark;
+    public Student(String name, int rn, int totalMark) {
+        this.name = name;
+        this.rn = rn;
+        this.totalMark = totalMark;
+    }
+    @Override
+    public int compareTo(Student other) {
+        return Integer.compare(this.rn, other.rn);
+    }
+    public static void bubbleSort(Student[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j].compareTo(arr[j + 1]) > 0) {
+                    // Swap arr[j] and arr[j+1]
+                    Student temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Student[] students = {
+            new Student("Alice", 101, 85),
+            new Student("Bob", 102, 90),
+            new Student("Charlie", 100, 88)
+        };
+        System.out.println("Before sorting:");
+        for (Student student : students) {
+            System.out.println(student.name + " - Roll Number: " + student.rn);
+        }
+        bubbleSort(students);
+        System.out.println("\nAfter sorting by roll number:");
+        for (Student student : students) {
+            System.out.println(student.name + " - Roll Number: " + student.rn);
+        }
+    }
+}
+A2Q6.
+public class Animal {
+    private String name;
+    private String color;
+    private String type;
+    public Animal(String name, String color, String type) {
+        this.name = name;
+        this.color = color;
+        this.type = type;
+    }
+    @Override
+    public int hashCode() {
+        return System.identityHashCode(this);
+    }
+    public static void main(String[] args) {
+        Animal dog = new Animal("Dog", "Brown", "Pet");
+        Animal cat = new Animal("Cat", "White", "Pet");
+        Animal tiger = new Animal("Tiger", "Orange", "Wild");
+        System.out.println("Dog's hash code: " + dog.hashCode());
+        System.out.println("Cat's hash code: " + cat.hashCode());
+        System.out.println("Tiger's hash code: " + tiger.hashCode());
+    }
+}
+

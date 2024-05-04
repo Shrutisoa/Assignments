@@ -1,0 +1,585 @@
+Q1.class Car {
+    private String make;
+    private String model;
+
+    // Parameterized constructor
+    public Car(String make, String model) {
+        this.make = make;
+        this.model = model;
+    }
+
+    // Getter and setter methods for make
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    // Getter and setter methods for model
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+}
+
+public class CarTester {
+    public static void main(String[] args) {
+        // Instantiate myCar1 with specified make and model
+        Car myCar1 = new Car("Toyota", "Corolla");
+
+        // Instantiate myCar2 with null values
+        Car myCar2 = new Car(null, null);
+
+        // Retrieve and print initial make and model of both cars
+        System.out.println("Initial Make and Model of myCar1: " + myCar1.getMake() + ", " + myCar1.getModel());
+        System.out.println("Initial Make and Model of myCar2: " + myCar2.getMake() + ", " + myCar2.getModel());
+
+        // Set new values for myCar2 using setter methods
+        myCar2.setMake("Honda");
+        myCar2.setModel("Civic");
+
+        // Print the updated make and model of myCar2
+        System.out.println("Updated Make and Model of myCar2: " + myCar2.getMake() + ", " + myCar2.getModel());
+    }
+}
+
+
+Q2.class Rectangle {
+    private double length;
+    private double width;
+
+    // Constructor to initialize length and width
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    // Getter method for length
+    public double getLength() {
+        return length;
+    }
+
+    // Setter method for length
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    // Getter method for width
+    public double getWidth() {
+        return width;
+    }
+
+    // Setter method for width
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    // Method to calculate the area of the rectangle
+    public double calculateArea() {
+        return length * width;
+    }
+
+    // Method to calculate the perimeter of the rectangle
+    public double calculatePerimeter() {
+        return 2 * (length + width);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an object of Rectangle class and initialize its attributes
+        Rectangle rectangle = new Rectangle(5.0, 3.0);
+
+        // Display the values of length and width
+        System.out.println("Length: " + rectangle.getLength());
+        System.out.println("Width: " + rectangle.getWidth());
+
+        // Calculate and display the area of the rectangle
+        System.out.println("Area: " + rectangle.calculateArea());
+
+        // Calculate and display the perimeter of the rectangle
+        System.out.println("Perimeter: " + rectangle.calculatePerimeter());
+    }
+}
+
+Q3.
+class Point {
+    private int x;
+    private int y;
+
+    // Parameterized constructor to initialize attributes
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Copy constructor
+    public Point(Point other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    // Getter method for x
+    public int getX() {
+        return x;
+    }
+
+    // Setter method for x
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    // Getter method for y
+    public int getY() {
+        return y;
+    }
+
+    // Setter method for y
+    public void setY(int y) {
+        this.y = y;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a point object using the parameterized constructor
+        Point point1 = new Point(3, 5);
+
+        // Create a new point object using the copy constructor
+        Point point2 = new Point(point1);
+
+        // Display the attributes of both point objects
+        System.out.println("Point 1 - X: " + point1.getX() + ", Y: " + point1.getY());
+        System.out.println("Point 2 - X: " + point2.getX() + ", Y: " + point2.getY());
+
+        // Modify the attributes of point1
+        point1.setX(7);
+        point1.setY(9);
+
+        // Display the attributes of both point objects again
+        System.out.println("After modification:");
+        System.out.println("Point 1 - X: " + point1.getX() + ", Y: " + point1.getY());
+        System.out.println("Point 2 - X: " + point2.getX() + ", Y: " + point2.getY());
+    }
+}
+Q4.
+class Laptop {
+    private String model;
+    private double price;
+
+    // Setter method for model
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    // Setter method for price
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    // Override toString() method to return a string representation of model and price
+    @Override
+    public String toString() {
+        return "Laptop Model: " + model + ", Price: $" + price;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of Laptop
+        Laptop laptop = new Laptop();
+
+        // Set the model of the laptop using the setter method
+        laptop.setModel("Dell XPS");
+
+        // Print the laptop object using the toString() method
+        System.out.println(laptop.toString());
+    }
+}
+Q5.
+class College {
+    private String collegeName;
+    private String collegeLoc;
+
+    public College(String collegeName, String collegeLoc) {
+        this.collegeName = collegeName;
+        this.collegeLoc = collegeLoc;
+    }
+
+    // Getter method for collegeName
+    public String getCollegeName() {
+        return collegeName;
+    }
+
+    // Getter method for collegeLoc
+    public String getCollegeLoc() {
+        return collegeLoc;
+    }
+}
+
+class Student {
+    private int studentId;
+    private String studentName;
+    private College college;
+
+    // Constructor to assign student ID, name, and college information
+    public Student(int studentId, String studentName, College college) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.college = college;
+    }
+
+    // Method to display student information
+    public void displayStudentInfo() {
+        System.out.println("Student ID: " + studentId);
+        System.out.println("Student Name: " + studentName);
+        System.out.println("College Information: " + college.getCollegeName() + ", " + college.getCollegeLoc());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Instantiate at least two College objects
+        College college1 = new College("ABC College", "City A");
+        College college2 = new College("XYZ College", "City B");
+
+        // Instantiate at least two Student objects and enroll them in colleges
+        Student student1 = new Student(1, "John", college1);
+        Student student2 = new Student(2, "Alice", college2);
+
+        // Display information of all colleges
+        System.out.println("College Information:");
+        System.out.println("College 1: " + college1.getCollegeName() + ", Location: " + college1.getCollegeLoc());
+        System.out.println("College 2: " + college2.getCollegeName() + ", Location: " + college2.getCollegeLoc());
+
+        // Display information of all students
+        System.out.println("\nStudent Information:");
+        System.out.println("Student 1:");
+        student1.displayStudentInfo();
+        System.out.println("\nStudent 2:");
+        student2.displayStudentInfo();
+    }
+}
+
+Q6.
+abstract class LibraryResource {
+    private String title;
+    private String author;
+
+    public LibraryResource(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    // Getters and setters
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    // Abstract method to display resource details
+    public abstract void displayDetails();
+}
+
+class Book extends LibraryResource {
+    private int pageCount;
+
+    public Book(String title, String author, int pageCount) {
+        super(title, author);
+        this.pageCount = pageCount;
+    }
+
+    // Getter and setter for pageCount
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    // Override displayDetails method to show book details
+    @Override
+    public void displayDetails() {
+        System.out.println("Book Title: " + getTitle());
+        System.out.println("Author: " + getAuthor());
+        System.out.println("Page Count: " + getPageCount());
+    }
+}
+
+class Magazine extends LibraryResource {
+    private String issueDate;
+
+    public Magazine(String title, String author, String issueDate) {
+        super(title, author);
+        this.issueDate = issueDate;
+    }
+
+    // Getter and setter for issueDate
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    // Override displayDetails method to show magazine details
+    @Override
+    public void displayDetails() {
+        System.out.println("Magazine Title: " + getTitle());
+        System.out.println("Author: " + getAuthor());
+        System.out.println("Issue Date: " + getIssueDate());
+    }
+}
+
+class DVD extends LibraryResource {
+    private int duration;
+
+    public DVD(String title, String author, int duration) {
+        super(title, author);
+        this.duration = duration;
+    }
+
+    // Getter and setter for duration
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    // Override displayDetails method to show DVD details
+    @Override
+    public void displayDetails() {
+        System.out.println("DVD Title: " + getTitle());
+        System.out.println("Author: " + getAuthor());
+        System.out.println("Duration: " + getDuration() + " minutes");
+    }
+}
+
+public class LibrarySystem {
+    public static void main(String[] args) {
+        // Instantiate various library resources
+        Book book = new Book("Java Programming", "John Doe", 500);
+        Magazine magazine = new Magazine("National Geographic", "Various Authors", "May 2024");
+        DVD dvd = new DVD("Inception", "Christopher Nolan", 150);
+
+        // Call displayDetails for each instance to show resource information
+        System.out.println("Book Details:");
+        book.displayDetails();
+        System.out.println("\nMagazine Details:");
+        magazine.displayDetails();
+        System.out.println("\nDVD Details:");
+        dvd.displayDetails();
+    }
+}
+Q7.
+// Define the Vehicle interface
+interface Vehicle {
+    void accelerate();
+    void brake();
+}
+
+// Car class implementing the Vehicle interface
+class Car implements Vehicle {
+    @Override
+    public void accelerate() {
+        System.out.println("Car is accelerating.");
+    }
+
+    @Override
+    public void brake() {
+        System.out.println("Car is braking.");
+    }
+
+    // Method overloading for accelerate method
+    public void accelerate(int speed) {
+        System.out.println("Car is accelerating at " + speed + " km/h.");
+    }
+
+    public void accelerate(int speed, int duration) {
+        System.out.println("Car is accelerating at " + speed + " km/h for " + duration + " seconds.");
+    }
+}
+
+// Bicycle class implementing the Vehicle interface
+class Bicycle implements Vehicle {
+    @Override
+    public void accelerate() {
+        System.out.println("Bicycle is accelerating.");
+    }
+
+    @Override
+    public void brake() {
+        System.out.println("Bicycle is braking.");
+    }
+
+    // Method overloading for accelerate method
+    public void accelerate(int speed) {
+        System.out.println("Bicycle is accelerating at " + speed + " km/h.");
+    }
+
+    public void accelerate(int speed, int duration) {
+        System.out.println("Bicycle is accelerating at " + speed + " km/h for " + duration + " seconds.");
+    }
+}
+
+// Main class to test the Car and Bicycle classes
+public class Main {
+    public static void main(String[] args) {
+        // Instantiate Car and Bicycle objects
+        Car car = new Car();
+        Bicycle bicycle = new Bicycle();
+
+        // Test overridden methods
+        System.out.println("Car:");
+        car.accelerate();
+        car.brake();
+
+        System.out.println("\nBicycle:");
+        bicycle.accelerate();
+        bicycle.brake();
+
+        // Test method overloading
+        System.out.println("\nCar Acceleration:");
+        car.accelerate(60);
+        car.accelerate(80, 10);
+
+        System.out.println("\nBicycle Acceleration:");
+        bicycle.accelerate(20);
+        bicycle.accelerate(30, 5);
+    }
+}
+Q9.// Interface for Enrollment System to enforce loose coupling
+interface EnrollmentSystem {
+    void enrollStudent(Student student, Course course);
+    void dropStudent(Student student, Course course);
+    void displayEnrollmentDetails();
+}
+
+// Student class representing a student
+class Student {
+    private String studentId;
+    private String studentName;
+
+    public Student(String studentId, String studentName) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+    }
+
+    // Getters for studentId and studentName
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+}
+
+// Course class representing a course
+class Course {
+    private String courseId;
+    private String courseName;
+
+    public Course(String courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+    }
+
+    // Getters for courseId and courseName
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+}
+
+// Enrollment class managing student enrollments
+class Enrollment implements EnrollmentSystem {
+    private List<Student> enrolledStudents;
+    private List<Course> enrolledCourses;
+
+    public Enrollment() {
+        enrolledStudents = new ArrayList<>();
+        enrolledCourses = new ArrayList<>();
+    }
+
+    // Method to enroll a student in a course
+    @Override
+    public void enrollStudent(Student student, Course course) {
+        enrolledStudents.add(student);
+        enrolledCourses.add(course);
+        System.out.println("Student " + student.getStudentName() + " enrolled in course " + course.getCourseName());
+    }
+
+    // Method to drop a student from a course
+    @Override
+    public void dropStudent(Student student, Course course) {
+        int index = enrolledStudents.indexOf(student);
+        if (index != -1 && enrolledCourses.get(index).equals(course)) {
+            enrolledStudents.remove(index);
+            enrolledCourses.remove(index);
+            System.out.println("Student " + student.getStudentName() + " dropped from course " + course.getCourseName());
+        } else {
+            System.out.println("Student " + student.getStudentName() + " is not enrolled in course " + course.getCourseName());
+        }
+    }
+
+    // Method to display enrollment details
+    @Override
+    public void displayEnrollmentDetails() {
+        System.out.println("Enrollment Details:");
+        for (int i = 0; i < enrolledStudents.size(); i++) {
+            System.out.println("Student: " + enrolledStudents.get(i).getStudentName() + ", Course: " + enrolledCourses.get(i).getCourseName());
+        }
+    }
+}
+
+// Main class to demonstrate the student enrollment system
+public class Main {
+    public static void main(String[] args) {
+        // Create instances of students and courses
+        Student student1 = new Student("1", "Alice");
+        Student student2 = new Student("2", "Bob");
+        Course course1 = new Course("C1", "Java Programming");
+        Course course2 = new Course("C2", "Database Management");
+
+        // Create an instance of Enrollment
+        Enrollment enrollment = new Enrollment();
+
+        // Enroll students in courses
+        enrollment.enrollStudent(student1, course1);
+        enrollment.enrollStudent(student2, course2);
+
+        // Display enrollment details
+        enrollment.displayEnrollmentDetails();
+
+        // Drop a student from a course
+        enrollment.dropStudent(student2, course2);
+
+        // Display updated enrollment details
+        enrollment.displayEnrollmentDetails();
+    }
+}
+
