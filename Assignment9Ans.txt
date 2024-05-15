@@ -1,0 +1,217 @@
+1/@FunctionalInterface
+interface Calculator {
+    double calculate(double a, double b);
+    
+    static Calculator add() {
+        return (a, b) -> a + b;
+    }
+    
+    static Calculator subtract() {
+        return (a, b) -> a - b;
+    }
+    
+    static Calculator multiply() {
+        return (a, b) -> a * b;
+    }
+    
+    static Calculator divide() {
+        return (a, b) -> a / b;
+    }
+    
+    public static void main(String[] args) {
+        Calculator add = Calculator.add();
+        Calculator subtract = Calculator.subtract();
+        Calculator multiply = Calculator.multiply();
+        Calculator divide = Calculator.divide();
+
+        System.out.println("Addition: " + add.calculate(10, 5));
+        System.out.println("Subtraction: " + subtract.calculate(10, 5));
+        System.out.println("Multiplication: " + multiply.calculate(10, 5));
+        System.out.println("Division: " + divide.calculate(10, 5));
+    }
+}
+2/import java.util.*;
+
+public class StringSorter {
+    public static void main(String[] args) {
+        List<String> strings = Arrays.asList("apple", "banana", "cherry", "date", "elderberry", "fig", "grape");
+
+        strings.sort((s1, s2) -> Integer.compare(s2.length(), s1.length()));
+
+        System.out.println(strings);
+    }
+}
+3/import java.util.stream.Stream;
+import java.util.function.Supplier;
+
+public class LazyPrimeSequence {
+    public static void main(String[] args) {
+        Supplier<Stream<Integer>> primeSupplier = () -> Stream.iterate(2, n -> n + 1)
+                                                               .filter(LazyPrimeSequence::isPrime);
+
+        primeSupplier.get().limit(10).forEach(System.out::println);
+    }
+
+    public static boolean isPrime(int number) {
+        return number > 1 && Stream.iterate(2, n -> n + 1)
+                                   .limit((long) Math.sqrt(number) - 1)
+                                   .noneMatch(divisor -> number % divisor == 0);
+    }
+}
+4/@FunctionalInterface
+interface Shape {
+    double area();
+
+    default void printArea() {
+        System.out.println("Area: " + area());
+    }
+    
+    public static void main(String[] args) {
+        Shape circle = () -> Math.PI * Math.pow(5, 2);
+        Shape square = () -> Math.pow(4, 2);
+        Shape rectangle = () -> 5 * 6;
+
+        circle.printArea();
+        square.printArea();
+        rectangle.printArea();
+    }
+}
+5/import java.util.*;
+import java.util.stream.Collectors;
+
+public class FilterStrings {
+    public static void main(String[] args) {
+        List<String> strings = Arrays.asList("apple", "banana", "cherry", "avocado", "date", "elderberry", "fig", "grape");
+        List<String> result = strings.stream()
+                                     .map(String::toUpperCase)
+                                     .filter(s -> !s.matches("^[AEIOU].*"))
+                                     .collect(Collectors.toList());
+
+        result.forEach(System.out::println);
+    }
+}
+6/import java.util.function.Function;
+
+public class FunctionReturningFunction {
+    public static void main(String[] args) {
+        Function<Integer, Function<Integer, Integer>> createSquareFunction = x -> (y -> y * y);
+        
+        Function<Integer, Integer> squareFunction = createSquareFunction.apply(0);
+        
+        System.out.println("Square of 5: " + squareFunction.apply(5));
+        System.out.println("Square of 10: " + squareFunction.apply(10));
+    }
+}
+7/import java.util.function.Function;
+
+public class RecursiveFactorial {
+    public static void main(String[] args) {
+        Function<Integer, Integer> factorial = n -> n == 0 ? 1 : n * factorial.apply(n - 1);
+
+        System.out.println("Factorial of 5: " + factorial.apply(5));
+        System.out.println("Factorial of 7: " + factorial.apply(7));
+    }
+}
+8/public class ThreadLambda {
+    public static void main(String[] args) {
+        Runnable runnable = () -> System.out.println("Hello, CSW2!");
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+}
+9/import java.util.LinkedList;
+import java.util.Queue;
+
+class BoundedBuffer {
+    private final Queue<Integer> buffer = new LinkedList<>();
+    private final int capacity;
+
+    public BoundedBuffer(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public synchronized void produce(int value) throws InterruptedException {
+        while (buffer.size() == capacity) {
+            wait();
+        }
+        buffer.add(value);
+        notifyAll();
+    }
+
+    public synchronized int consume() throws InterruptedException {
+        while (buffer.isEmpty()) {
+            wait();
+        }
+        int value = buffer.poll();
+        notifyAll();
+        return value;
+    }
+}
+
+public class ProducerConsumerProblem {
+    public static void main(String[] args) {
+        BoundedBuffer buffer = new BoundedBuffer(5);
+
+        Runnable producer = () -> {
+            int value = 0;
+            while (true) {
+                try {
+                    buffer.produce(value);
+                    System.out.println("Produced: " + value);
+                    value++;
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        };
+
+        Runnable consumer = () -> {
+            while (true) {
+                try {
+                    int value = buffer.consume();
+                    System.out.println("Consumed: " + value);
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        };
+
+        new Thread(producer).start();
+        new Thread(consumer).start();
+    }
+}
+10/import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateTimeFormatExample {
+    public static void main(String[] args) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String formattedDateTime = dateTime.format(formatter);
+        System.out.println(formattedDateTime);
+    }
+}
+11/import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class UTCToLocalTime {
+    public static void main(String[] args) {
+        String utcDateTime = "2024-05-15T10:00:00Z";
+        Instant instant = Instant.parse(utcDateTime);
+        
+        ZoneId zoneId = ZoneId.of("America/New_York");
+        ZonedDateTime zonedDateTime = instant.atZone(zoneId);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = zonedDateTime.format(formatter);
+        
+        System.out.println("UTC Time: " + utcDateTime);
+        System.out.println("New York Time: " + formattedDateTime);
+    }
+}

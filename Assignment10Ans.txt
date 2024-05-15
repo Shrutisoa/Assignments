@@ -1,0 +1,333 @@
+1/public class Calculator {
+    public static void main(String[] args) {
+        double a = 10.0;
+        double b = 5.0;
+
+        Thread additionThread = new Thread(() -> {
+            double result = a + b;
+            System.out.println("Addition: " + result);
+        });
+
+        Thread subtractionThread = new Thread(() -> {
+            double result = a - b;
+            System.out.println("Subtraction: " + result);
+        });
+
+        Thread multiplicationThread = new Thread(() -> {
+            double result = a * b;
+            System.out.println("Multiplication: " + result);
+        });
+
+        Thread divisionThread = new Thread(() -> {
+            double result = a / b;
+            System.out.println("Division: " + result);
+        });
+
+        additionThread.start();
+        subtractionThread.start();
+        multiplicationThread.start();
+        divisionThread.start();
+    }
+}
+2/import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+public class ReactiveFileReader {
+    public static void main(String[] args) {
+        String filePath = "path/to/your/file.txt";
+
+        Observable.fromCallable(() -> Files.readAllLines(Paths.get(filePath)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.single())
+                .subscribe(lines -> lines.forEach(System.out::println),
+                        Throwable::printStackTrace);
+    }
+}
+3/public class MatrixMultiplication {
+    private static final int SIZE = 3;
+    private static int[][] resultMatrix = new int[SIZE][SIZE];
+
+    public static void main(String[] args) throws InterruptedException {
+        int[][] matrix1 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        int[][] matrix2 = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
+        
+        Thread[] threads = new Thread[SIZE];
+        
+        for (int i = 0; i < SIZE; i++) {
+            int row = i;
+            threads[i] = new Thread(() -> multiplyRow(matrix1, matrix2, row));
+            threads[i].start();
+        }
+        
+        for (Thread thread : threads) {
+            thread.join();
+        }
+
+        // Print result matrix
+        for (int[] row : resultMatrix) {
+            for (int val : row) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private static void multiplyRow(int[][] matrix1, int[][] matrix2, int row) {
+        for (int col = 0; col < SIZE; col++) {
+            for (int k = 0; k < SIZE; k++) {
+                resultMatrix[row][col] += matrix1[row][k] * matrix2[k][col];
+            }
+        }
+    }
+}
+4/public class EvenOddPrinter {
+    private static final Object lock = new Object();
+    private static boolean evenTurn = true;
+
+    public static void main(String[] args) {
+        Thread evenThread = new Thread(() -> printNumbers(true));
+        Thread oddThread = new Thread(() -> printNumbers(false));
+
+        evenThread.start();
+        oddThread.start();
+    }
+
+    private static void printNumbers(boolean isEven) {
+        int number = isEven ? 2 : 1;
+        while (number <= 10) {
+            synchronized (lock) {
+                while (isEven != evenTurn) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                System.out.println(number);
+                number += 2;
+                evenTurn = !evenTurn;
+                lock.notify();
+            }
+        }
+    }
+}
+5/import java.util.concurrent.locks.ReentrantLock;
+
+public class SharedResourceLock {
+    private static final ReentrantLock lock = new ReentrantLock();
+    private static int sharedResource = 0;
+
+    public static void main(String[] args) {
+        Runnable task = () -> {
+            for (int i = 0; i < 5; i++) {
+                accessSharedResource();
+            }
+        };
+
+        Thread thread1 = new Thread(task);
+        Thread thread2 = new Thread(task);
+
+        thread1.start();
+        thread2.start();
+    }
+
+    private static void accessSharedResource() {
+        lock.lock();
+        try {
+            sharedResource++;
+            System.out.println(Thread.currentThread().getName() + " accessed shared resource. Count: " + sharedResource);
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+6/import java.util.ArrayList;
+import java.util.List;
+
+public class PrimeGenerator {
+    public static void main(String[] args) throws InterruptedException {
+        int limit = 100;
+        int numberOfThreads = 4;
+        int range = limit / numberOfThreads;
+        List<Thread> threads = new ArrayList<>();
+        
+        for (int i = 0; i < numberOfThreads; i++) {
+            int start = i * range + 1;
+            int end = (i == numberOfThreads - 1) ? limit : start + range - 1;
+            Thread thread = new Thread(new PrimeTask(start, end));
+            threads.add(thread);
+            thread.start();
+        }
+        
+        for (Thread thread : threads) {
+            thread.join();
+        }
+    }
+}
+
+class PrimeTask implements Runnable {
+    private int start, end;
+
+    public PrimeTask(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public void run() {
+        for (int i = start; i <= end; i++) {
+            if (isPrime(i)) {
+                System.out.println(i + " is prime.");
+            }
+        }
+    }
+
+    private boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+}
+7/import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+public class CompletableFutureExample {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
+            // Simulate fetching data from remote server
+            try { Thread.sleep(1000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+            return "Data from server 1";
+        });
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            // Simulate fetching data from another server
+            try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+            return "Data from server 2";
+        });
+
+        CompletableFuture<String> combinedFuture = future1.thenCombine(future2, (data1, data2) -> data1 + " & " + data2);
+        System.out.println(combinedFuture.get());
+    }
+}
+8/import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+import java.util.concurrent.TimeUnit;
+
+public class ReactiveWeatherAnalysis {
+    public static void main(String[] args) {
+        Observable<Long> weatherDataStream = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation());
+
+        weatherDataStream
+                .map(time -> "Temperature: " + (20 + time % 10) + "°C")
+                .filter(data -> data.contains("25"))
+                .subscribe(data -> System.out.println("Processed: " + data));
+
+        try {
+            Thread.sleep(10000); // Keep main thread alive to see the output
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+9/import java.io.*;
+import java.nio.file.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class MultiThreadedFileProcessing {
+    private static final int THREAD_COUNT = 4;
+    private static final ConcurrentHashMap<String, AtomicInteger> wordCountMap = new ConcurrentHashMap<>();
+
+    public static void main(String[] args) throws InterruptedException {
+        String filePath = "path/to/your/large/text/file.txt";
+        ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
+
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                final String lineToProcess = line;
+                executor.submit(() -> processLine(lineToProcess));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        executor.shutdown();
+        executor.awaitTermination(1, TimeUnit.MINUTES);
+
+        // Print word counts
+        wordCountMap.forEach((word, count) -> System.out.println(word + ": " + count.get()));
+    }
+
+    private static void processLine(String line) {
+        String[] words = line.split("\\W+");
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                wordCountMap.computeIfAbsent(word.toLowerCase(), k -> new AtomicInteger()).incrementAndGet();
+            }
+        }
+    }
+}
+10/import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ConcurrentImageProcessing {
+    public static void main(String[] args) {
+        File[] imageFiles = new File("path/to/your/images").listFiles((dir, name) -> name.endsWith(".jpg"));
+        if (imageFiles == null) {
+            System.out.println("No images found");
+            return;
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+
+        for (File imageFile : imageFiles) {
+            executor.submit(() -> processImage(imageFile));
+        }
+
+        executor.shutdown();
+    }
+
+    private static void processImage(File imageFile) {
+        try {
+            BufferedImage image = ImageIO.read(imageFile);
+            BufferedImage processedImage = applyFilter(image);  // Example processing function
+            File output = new File("path/to/output/" + imageFile.getName());
+            ImageIO.write(processedImage, "jpg", output);
+            System.out.println("Processed: " + imageFile.getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static BufferedImage applyFilter(BufferedImage image) {
+        // Dummy filter for demonstration
+        BufferedImage result = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                int rgba = image.getRGB(x, y);
+                int alpha = (rgba >> 24) & 0xff;
+                int red = (rgba >> 16) & 0xff;
+                int green = (rgba >> 8) & 0xff;
+                int blue = rgba & 0xff;
+                // Invert colors
+                rgba = (alpha << 24) | ((255 - red) << 16) | ((255 - green) << 8) | (255 - blue);
+                result.setRGB(x, y, rgba);
+            }
+        }
+        return result;
+    }
+}

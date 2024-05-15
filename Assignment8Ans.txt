@@ -1,0 +1,568 @@
+1/class BSTNode {
+    int info;
+    BSTNode left, right;
+
+    public BSTNode(int info) {
+        this.info = info;
+        this.left = this.right = null;
+    }
+}
+
+class BinarySearchTree {
+    BSTNode root;
+
+    public BinarySearchTree() {
+        this.root = null;
+    }
+
+    public void insert(int info) {
+        root = insertRec(root, info);
+    }
+
+    private BSTNode insertRec(BSTNode root, int info) {
+        if (root == null) {
+            root = new BSTNode(info);
+            return root;
+        }
+        if (info < root.info) {
+            root.left = insertRec(root.left, info);
+        } else if (info > root.info) {
+            root.right = insertRec(root.right, info);
+        }
+        return root;
+    }
+}
+2/class BinarySearchTree {
+    BSTNode root;
+
+    public BinarySearchTree() {
+        this.root = null;
+    }
+
+    public void insert(int info) {
+        root = insertRec(root, info);
+    }
+
+    private BSTNode insertRec(BSTNode root, int info) {
+        if (root == null) {
+            root = new BSTNode(info);
+            return root;
+        }
+        if (info < root.info) {
+            root.left = insertRec(root.left, info);
+        } else if (info > root.info) {
+            root.right = insertRec(root.right, info);
+        }
+        return root;
+    }
+
+    public void preorderTraversal() {
+        preorderRec(root);
+    }
+
+    private void preorderRec(BSTNode root) {
+        if (root != null) {
+            System.out.print(root.info + " ");
+            preorderRec(root.left);
+            preorderRec(root.right);
+        }
+    }
+
+    public void inorderTraversal() {
+        inorderRec(root);
+    }
+
+    private void inorderRec(BSTNode root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.info + " ");
+            inorderRec(root.right);
+        }
+    }
+
+    public void postorderTraversal() {
+        postorderRec(root);
+    }
+
+    private void postorderRec(BSTNode root) {
+        if (root != null) {
+            postorderRec(root.left);
+            postorderRec(root.right);
+            System.out.print(root.info + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
+
+        System.out.print("Pre-order traversal: ");
+        bst.preorderTraversal();
+        System.out.println();
+
+        System.out.print("In-order traversal: ");
+        bst.inorderTraversal();
+        System.out.println();
+
+        System.out.print("Post-order traversal: ");
+        bst.postorderTraversal();
+        System.out.println();
+    }
+}
+3/class Country {
+    String name;
+    int population;
+
+    public Country(String name, int population) {
+        this.name = name;
+        this.population = population;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + population + ")";
+    }
+}
+
+class BNode {
+    Country info;
+    BNode left, right;
+
+    public BNode(Country info) {
+        this.info = info;
+        this.left = this.right = null;
+    }
+}
+
+class BST {
+    BNode root;
+
+    public BST() {
+        this.root = null;
+    }
+
+    public void insert(Country info) {
+        root = insertRec(root, info);
+    }
+
+    private BNode insertRec(BNode root, Country info) {
+        if (root == null) {
+            root = new BNode(info);
+            return root;
+        }
+        if (info.population < root.info.population) {
+            root.left = insertRec(root.left, info);
+        } else if (info.population > root.info.population) {
+            root.right = insertRec(root.right, info);
+        }
+        return root;
+    }
+}
+4/class BST {
+    BNode root;
+
+    public BST() {
+        this.root = null;
+    }
+
+    public void insert(Country info) {
+        root = insertRec(root, info);
+    }
+
+    private BNode insertRec(BNode root, Country info) {
+        if (root == null) {
+            root = new BNode(info);
+            return root;
+        }
+        if (info.population < root.info.population) {
+            root.left = insertRec(root.left, info);
+        } else if (info.population > root.info.population) {
+            root.right = insertRec(root.right, info);
+        }
+        return root;
+    }
+
+    public void levelOrderTraversal() {
+        if (root == null) return;
+
+        Queue<BNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            BNode tempNode = queue.poll();
+            System.out.print(tempNode.info + " ");
+
+            if (tempNode.left != null) {
+                queue.add(tempNode.left);
+            }
+
+            if (tempNode.right != null) {
+                queue.add(tempNode.right);
+            }
+        }
+    }
+
+    public Country findMax() {
+        return findMaxRec(root).info;
+    }
+
+    private BNode findMaxRec(BNode root) {
+        if (root == null) return null;
+        if (root.right == null) return root;
+        return findMaxRec(root.right);
+    }
+
+    public Country findMin() {
+        return findMinRec(root).info;
+    }
+
+    private BNode findMinRec(BNode root) {
+        if (root == null) return null;
+        if (root.left == null) return root;
+        return findMinRec(root.left);
+    }
+
+    public static void main(String[] args) {
+        BST bst = new BST();
+        bst.insert(new Country("A", 500000));
+        bst.insert(new Country("B", 1000000));
+        bst.insert(new Country("C", 750000));
+
+        System.out.print("Level-order traversal: ");
+        bst.levelOrderTraversal();
+        System.out.println();
+
+        System.out.println("Country with maximum population: " + bst.findMax());
+        System.out.println("Country with minimum population: " + bst.findMin());
+    }
+}
+5/class BinarySearchTree {
+    BSTNode root;
+
+    public BinarySearchTree() {
+        this.root = null;
+    }
+
+    public void createTree(int[] sortedArray) {
+        root = createTreeRec(sortedArray, 0, sortedArray.length - 1);
+    }
+
+    private BSTNode createTreeRec(int[] arr, int start, int end) {
+        if (start > end) return null;
+
+        int mid = (start + end) / 2;
+        BSTNode node = new BSTNode(arr[mid]);
+
+        node.left = createTreeRec(arr, start, mid - 1);
+        node.right = createTreeRec(arr, mid + 1, end);
+
+        return node;
+    }
+
+    public void inorderTraversal() {
+        inorderRec(root);
+    }
+
+    private void inorderRec(BSTNode root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.info + " ");
+            inorderRec(root.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+        int[] sortedArray = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+        bst.createTree(sortedArray);
+
+        System.out.print("In-order traversal: ");
+        bst.inorderTraversal();
+        System.out.println();
+    }
+}
+6/class BinarySearchTree {
+    BSTNode root;
+
+    public BinarySearchTree() {
+        this.root = null;
+    }
+
+    public boolean isBST() {
+        return isBSTRec(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private boolean isBSTRec(BSTNode node, int min, int max) {
+        if (node == null) return true;
+
+        if (node.info < min || node.info > max) return false;
+
+        return isBSTRec(node.left, min, node.info - 1) && isBSTRec(node.right, node.info + 1, max);
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+        bst.root = new BSTNode(50);
+        bst.root.left = new BSTNode(30);
+        bst.root.right = new BSTNode(70);
+        bst.root.left.left = new BSTNode(20);
+        bst.root.left.right = new BSTNode(40);
+        bst.root.right.left = new BSTNode(60);
+        bst.root.right.right = new BSTNode(80);
+
+        System.out.println("Is the tree a BST? " + bst.isBST());
+    }
+}
+7/class BinarySearchTree {
+    BSTNode root;
+
+    public BinarySearchTree() {
+        this.root = null;
+    }
+
+    public void delete(int info) {
+        root = deleteRec(root, info);
+    }
+
+    private BSTNode deleteRec(BSTNode root, int info) {
+        if (root == null) return root;
+
+        if (info < root.info) {
+            root.left = deleteRec(root.left, info);
+        } else if (info > root.info) {
+            root.right = deleteRec(root.right, info);
+        } else {
+            // node with only one child or no child
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
+
+            // node with two children
+            root.info = minValue(root.right);
+
+            root.right = deleteRec(root.right, root.info);
+        }
+
+        return root;
+    }
+
+    private int minValue(BSTNode root) {
+        int minv = root.info;
+        while (root.left != null) {
+            minv = root.left.info;
+            root = root.left;
+        }
+        return minv;
+    }
+
+    public void inorderTraversal() {
+        inorderRec(root);
+    }
+
+    private void inorderRec(BSTNode root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.info + " ");
+            inorderRec(root.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
+
+        System.out.print("In-order traversal before deletion: ");
+        bst.inorderTraversal();
+        System.out.println();
+
+        bst.delete(20);
+        System.out.print("In-order traversal after deleting 20: ");
+        bst.inorderTraversal();
+        System.out.println();
+
+        bst.delete(30);
+        System.out.print("In-order traversal after deleting 30: ");
+        bst.inorderTraversal();
+        System.out.println();
+
+        bst.delete(50);
+        System.out.print("In-order traversal after deleting 50: ");
+        bst.inorderTraversal();
+        System.out.println();
+    }
+}
+8/import java.util.*;
+
+class Graph {
+    private int V;
+    private int[][] adjMatrix;
+    private LinkedList<Integer>[] adjList;
+
+    public Graph(int V) {
+        this.V = V;
+        adjMatrix = new int[V][V];
+        adjList = new LinkedList[V];
+        for (int i = 0; i < V; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    public void addEdge(int v, int w) {
+        adjMatrix[v][w] = 1;
+        adjMatrix[w][v] = 1; // For undirected graph
+        adjList[v].add(w);
+        adjList[w].add(v); // For undirected graph
+    }
+
+    public void displayAdjMatrix() {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                System.out.print(adjMatrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void displayAdjList() {
+        for (int i = 0; i < V; i++) {
+            System.out.print(i + " -> ");
+            for (Integer v : adjList[i]) {
+                System.out.print(v + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(5);
+        g.addEdge(0, 1);
+        g.addEdge(0, 4);
+        g.addEdge(1, 2);
+        g.addEdge(1, 3);
+        g.addEdge(1, 4);
+        g.addEdge(2, 3);
+        g.addEdge(3, 4);
+
+        System.out.println("Adjacency Matrix:");
+        g.displayAdjMatrix();
+
+        System.out.println("Adjacency List:");
+        g.displayAdjList();
+    }
+}
+9/import java.util.*;
+
+class Graph {
+    private int V;
+    private LinkedList<Integer>[] adjList;
+
+    public Graph(int V) {
+        this.V = V;
+        adjList = new LinkedList[V];
+        for (int i = 0; i < V; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    public void addEdge(int v, int w) {
+        adjList[v].add(w);
+        adjList[w].add(v); // For undirected graph
+    }
+
+    public void DFS(int v) {
+        boolean[] visited = new boolean[V];
+        DFSUtil(v, visited);
+    }
+
+    private void DFSUtil(int v, boolean[] visited) {
+        visited[v] = true;
+        System.out.print(v + " ");
+
+        for (int n : adjList[v]) {
+            if (!visited[n]) {
+                DFSUtil(n, visited);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(4);
+
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 3);
+
+        System.out.print("Depth First Traversal starting from vertex 2: ");
+        g.DFS(2);
+    }
+}
+10/import java.util.*;
+
+class Graph {
+    private int V;
+    private LinkedList<Integer>[] adjList;
+
+    public Graph(int V) {
+        this.V = V;
+        adjList = new LinkedList[V];
+        for (int i = 0; i < V; i++) {
+            adjList[i] = new LinkedList<>();
+        }
+    }
+
+    public void addEdge(int v, int w) {
+        adjList[v].add(w);
+        adjList[w].add(v); // For undirected graph
+    }
+
+    public void BFS(int s) {
+        boolean[] visited = new boolean[V];
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+
+        visited[s] = true;
+        queue.add(s);
+
+        while (!queue.isEmpty()) {
+            s = queue.poll();
+            System.out.print(s + " ");
+
+            for (int n : adjList[s]) {
+                if (!visited[n]) {
+                    visited[n] = true;
+                    queue.add(n);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(4);
+
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 3);
+
+        System.out.print("Breadth First Traversal starting from vertex 2: ");
+        g.BFS(2);
+    }
+}
+
